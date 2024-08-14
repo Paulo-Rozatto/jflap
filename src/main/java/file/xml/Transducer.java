@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,9 +15,6 @@
  */
 
 
-
-
-
 package file.xml;
 
 import file.ParseException;
@@ -28,46 +25,46 @@ import org.w3c.dom.Document;
  * This is an interface for objects that serve as a go between from DOM to a
  * JFLAP object representing a structure (such as an automaton or grammar), and
  * back again.
- * 
+ *
  * @author Thomas Finley
  */
 
 public interface Transducer {
-	/**
-	 * Given a document, this will return the corresponding JFLAP structure
-	 * encoded in the DOM document.
-	 * 
-	 * @param document
-	 *            the DOM document to decode
-	 * @return a serializable object, as all JFLAP structures are encoded in
-	 *         serializable objects
-	 * @throws ParseException
-	 *             in the event of an error that may lead to undesirable
-	 *             functionality
-	 */
-	public Serializable fromDOM(Document document);
+    /**
+     * The tag name for the root of a structure.
+     */
+    String STRUCTURE_NAME = "structure";
+    /**
+     * The tag name for the type of structure this is.
+     */
+    String STRUCTURE_TYPE_NAME = "type";
 
-	/**
-	 * Given a JFLAP structure, this will return the corresponding DOM encoding
-	 * of the structure.
-	 * 
-	 * @param structure
-	 *            the JFLAP structure to encode
-	 * @return a DOM document instance
-	 */
-	public Document toDOM(Serializable structure);
+    /**
+     * Given a document, this will return the corresponding JFLAP structure
+     * encoded in the DOM document.
+     *
+     * @param document the DOM document to decode
+     * @return a serializable object, as all JFLAP structures are encoded in
+     * serializable objects
+     * @throws ParseException in the event of an error that may lead to undesirable
+     *                        functionality
+     */
+    Serializable fromDOM(Document document);
 
-	/**
-	 * Returns the string encoding of the type this transducer decodes and
-	 * encodes.
-	 * 
-	 * @return the type this transducer recognizes
-	 */
-	public String getType();
+    /**
+     * Given a JFLAP structure, this will return the corresponding DOM encoding
+     * of the structure.
+     *
+     * @param structure the JFLAP structure to encode
+     * @return a DOM document instance
+     */
+    Document toDOM(Serializable structure);
 
-	/** The tag name for the root of a structure. */
-	public static final String STRUCTURE_NAME = "structure";
-
-	/** The tag name for the type of structure this is. */
-	public static final String STRUCTURE_TYPE_NAME = "type";
+    /**
+     * Returns the string encoding of the type this transducer decodes and
+     * encodes.
+     *
+     * @return the type this transducer recognizes
+     */
+    String getType();
 }

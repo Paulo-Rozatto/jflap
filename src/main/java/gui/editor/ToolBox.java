@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,34 +15,27 @@
  */
 
 
-
-
-
 package gui.editor;
 
 import gui.viewer.AutomatonDrawer;
 import gui.viewer.AutomatonPane;
-
 import java.util.List;
 
 /**
  * A <CODE>ToolBox</CODE> is an object used for defining what tools are in a
  * <CODE>ToolBar</CODE> object.
- * 
+ *
+ * @author Thomas Finley
  * @see gui.editor.ToolBar
  * @see gui.editor.Tool
- * 
- * @author Thomas Finley
  */
 
 public interface ToolBox {
-	/**
-	 * Returns a list of tools in the order they should be in the tool bar.
-	 * 
-	 * @param view
-	 *            the view that the automaton will be drawn in
-	 * @param drawer
-	 *            the automaton drawer for the view
-	 */
-	public List<Tool> tools(AutomatonPane view, AutomatonDrawer drawer);
+    /**
+     * Returns a list of tools in the order they should be in the tool bar.
+     *
+     * @param view   the view that the automaton will be drawn in
+     * @param drawer the automaton drawer for the view
+     */
+    List<Tool> tools(AutomatonPane view, AutomatonDrawer drawer);
 }

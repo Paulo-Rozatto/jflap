@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,33 +15,29 @@
  */
 
 
-
-
 package gui.action;
 
 
 import gui.environment.Universe;
-
 import java.awt.event.ActionEvent;
 
 public class OpenURLAction extends RestrictedAction {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	public OpenURLAction(){
-		super("Open URL", null);
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	public boolean isEnabled() {
-		if(Universe.CHOOSER == null) return true; 
-		return false;
-	}
+    public OpenURLAction() {
+        super("Open URL", null);
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		
-	}
+    public boolean isEnabled() {
+        return Universe.CHOOSER == null;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+    }
 
 }

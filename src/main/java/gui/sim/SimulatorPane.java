@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,9 +15,6 @@
  */
 
 
-
-
-
 package gui.sim;
 
 import automata.Automaton;
@@ -28,120 +25,114 @@ import gui.editor.ArrowDisplayOnlyTool;
 import gui.environment.Environment;
 import gui.viewer.AutomatonPane;
 import gui.viewer.SelectionDrawer;
-
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 /**
  * The <CODE>SimulatorPane</CODE> is the main view for the GUI front end for
  * the simulation of input on automatons. The automaton has two major subviews:
  * a section for the drawing of the automaton, and a section for the list of
  * machine configurations.
- * 
+ *
+ * @author Thomas Finley
  * @see automata.Automaton
  * @see automata.Configuration
  * @see automata.AutomatonSimulator
- * 
- * @author Thomas Finley
  */
 
 public class SimulatorPane extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * The simulator
+     */
+    private final AutomatonSimulator simulator;
+    /**
+     * The automaton that this simulator pane is simulating.
+     */
+    private Automaton automaton;
 
-	/**
-	 * Instantiates a simulator pane for a given automaton, and a given input
-	 * string.
-	 * 
-	 * @param automaton
-	 *            the automaton to create the simulator pane for
-	 * @param simulator
-	 *            the automaton simulator which we step through the automaton on
-	 * @param configurations
-	 *            the initial configurations that this simulator should start
-	 *            with
-	 * @param env
-	 *            the environment this simulator pane will be added to
-	 */
-	public SimulatorPane(Automaton automaton, AutomatonSimulator simulator,
-			Configuration[] configurations, Environment env, boolean blockStep) {
-		this.automaton = automaton;
-		this.simulator = simulator;
-		initView(configurations, env, blockStep);
-	}
+    /**
+     * Instantiates a simulator pane for a given automaton, and a given input
+     * string.
+     *
+     * @param automaton      the automaton to create the simulator pane for
+     * @param simulator      the automaton simulator which we step through the automaton on
+     * @param configurations the initial configurations that this simulator should start
+     *                       with
+     * @param env            the environment this simulator pane will be added to
+     */
+    public SimulatorPane(Automaton automaton, AutomatonSimulator simulator,
+                         Configuration[] configurations, Environment env, boolean blockStep) {
+        this.automaton = automaton;
+        this.simulator = simulator;
+        initView(configurations, env, blockStep);
+    }
 
-	/**
-	 * Initiates the views, or in general, sets up the GUI.
-	 * 
-	 * @param configs
-	 *            an array of the initial configuration for this simulator
-	 * @param env
-	 *            the environment the simulator pane will be added to
-	 */
-	private void initView(Configuration[] configs, final Environment env,
-			boolean blockStep) {
-		this.setLayout(new BorderLayout());
-		// Set up the main display.
-		SelectionDrawer drawer = new SelectionDrawer(automaton);
-		AutomatonPane display = new AutomatonPane(drawer, true);
-		// Add the listener to the display.
-		ArrowDisplayOnlyTool arrow = new ArrowDisplayOnlyTool(display, drawer);
-		display.addMouseListener(arrow);
+    /**
+     * Initiates the views, or in general, sets up the GUI.
+     *
+     * @param configs an array of the initial configuration for this simulator
+     * @param env     the environment the simulator pane will be added to
+     */
+    private void initView(Configuration[] configs, final Environment env,
+                          boolean blockStep) {
+        this.setLayout(new BorderLayout());
+        // Set up the main display.
+        SelectionDrawer drawer = new SelectionDrawer(automaton);
+        AutomatonPane display = new AutomatonPane(drawer, true);
+        // Add the listener to the display.
+        ArrowDisplayOnlyTool arrow = new ArrowDisplayOnlyTool(display, drawer);
+        display.addMouseListener(arrow);
 
-		// Initialize the lower display.
-		JPanel lower = new JPanel();
-		lower.setLayout(new BorderLayout());
+        // Initialize the lower display.
+        JPanel lower = new JPanel();
+        lower.setLayout(new BorderLayout());
 
-		// Initialize the scroll pane for the configuration view.
-		JScrollPane scroller = new JScrollPane(
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        // Initialize the scroll pane for the configuration view.
+        JScrollPane scroller = new JScrollPane(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		// Set up the configurations pane.
-		ConfigurationPane configurations = new ConfigurationPane(automaton);
-		configurations.setLayout(new GridLayout(0, 4));
-		for (int i = 0; i < configs.length; i++){
-			configurations.add(configs[i]);
-		}
-		// Set up the bloody controller device.
-		final ConfigurationController controller = new ConfigurationController(
-				configurations, simulator, drawer, display);
-		env.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if (env.contains(SimulatorPane.this))
-					return;
-				env.removeChangeListener(this);
-				controller.cleanup();
-			}
-		});
-		ControlPanel controlPanel = new ControlPanel(controller);
-		controlPanel.setBlock(blockStep);
-		// Set up the lower display.
-		scroller.getViewport().setView(configurations);
-		lower.add(scroller, BorderLayout.CENTER);
-		lower.add(controlPanel, BorderLayout.SOUTH);
+        // Set up the configurations pane.
+        ConfigurationPane configurations = new ConfigurationPane(automaton);
+        configurations.setLayout(new GridLayout(0, 4));
+        for (int i = 0; i < configs.length; i++) {
+            configurations.add(configs[i]);
+        }
+        // Set up the bloody controller device.
+        final ConfigurationController controller = new ConfigurationController(
+                configurations, simulator, drawer, display);
+        env.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                if (env.contains(SimulatorPane.this))
+                    return;
+                env.removeChangeListener(this);
+                controller.cleanup();
+            }
+        });
+        ControlPanel controlPanel = new ControlPanel(controller);
+        controlPanel.setBlock(blockStep);
+        // Set up the lower display.
+        scroller.getViewport().setView(configurations);
+        lower.add(scroller, BorderLayout.CENTER);
+        lower.add(controlPanel, BorderLayout.SOUTH);
 
-		// Set up the main view.
-		JSplitPane split = SplitPaneFactory.createSplit(env, false, .6,
-				display, lower);
-		this.add(split, BorderLayout.CENTER);
-	}
+        // Set up the main view.
+        JSplitPane split = SplitPaneFactory.createSplit(env, false, .6,
+                display, lower);
+        this.add(split, BorderLayout.CENTER);
+    }
 
-	public void setAutomaton(Automaton newAuto) {
-		automaton = newAuto;
-	}
-
-	/** The automaton that this simulator pane is simulating. */
-	private Automaton automaton;
-
-	/** The simulator */
-	private AutomatonSimulator simulator;
+    public void setAutomaton(Automaton newAuto) {
+        automaton = newAuto;
+    }
 
 }

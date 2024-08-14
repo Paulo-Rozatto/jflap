@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,9 +15,6 @@
  */
 
 
-
-
-
 package automata.fsa;
 
 import automata.*;
@@ -28,36 +25,35 @@ import java.util.*;
  * given finite state automaton. The method of determining the alphabet for
  * automaton involves examining all transitions in the automaton and adding each
  * new character on a transition label to the alphabet.
- * 
+ *
  * @author Ryan Cavalcante
  */
 
 public class FSAAlphabetRetriever extends AlphabetRetriever {
-	/**
-	 * Creates an instance of <CODE>FSAAlphabetRetriever</CODE>.
-	 */
-	public FSAAlphabetRetriever() {
+    /**
+     * Creates an instance of <CODE>FSAAlphabetRetriever</CODE>.
+     */
+    public FSAAlphabetRetriever() {
 
-	}
+    }
 
-	/**
-	 * Returns the alphabet of <CODE>automaton</CODE> by analyzing all
-	 * transitions and their labels.
-	 * 
-	 * @param automaton
-	 *            the automaton
-	 * @return the alphabet, in a string[].
-	 */
-	public String[] getAlphabet(Automaton automaton) {
-		ArrayList<String> list = new ArrayList<>();
-		Transition[] transitions = automaton.getTransitions();
-		for (int k = 0; k < transitions.length; k++) {
-			FSATransition transition = (FSATransition) transitions[k];
-			String label = transition.getLabel();
-			if (!label.equals("") && !list.contains(label)) {
-				list.add(label);
-			}
-		}
-		return (String[]) list.toArray(new String[0]);
-	}
+    /**
+     * Returns the alphabet of <CODE>automaton</CODE> by analyzing all
+     * transitions and their labels.
+     *
+     * @param automaton the automaton
+     * @return the alphabet, in a string[].
+     */
+    public String[] getAlphabet(Automaton automaton) {
+        ArrayList<String> list = new ArrayList<>();
+        Transition[] transitions = automaton.getTransitions();
+        for (int k = 0; k < transitions.length; k++) {
+            FSATransition transition = (FSATransition) transitions[k];
+            String label = transition.getLabel();
+            if (!label.equals("") && !list.contains(label)) {
+                list.add(label);
+            }
+        }
+        return list.toArray(new String[0]);
+    }
 }

@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,119 +15,109 @@
  */
 
 
-
-
 package gui.grammar.parse;
 
 import grammar.parse.ParseNode;
 import gui.tree.DefaultNodeDrawer;
-
-import javax.swing.tree.TreeNode;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.tree.TreeNode;
 
 /**
  * This class allows user to select items in the tree Panel.
  * This class was intended to be used with UserControlParsePane,
  * however we decided to not to use it.
- * 
- * However, this class is still called from UserControlParsePane for drawing. 
- * 
- * Could be useful in the future. 
- * 
- * @author Kyung Min (Jason) Lee
+ * <p>
+ * However, this class is still called from UserControlParsePane for drawing.
+ * <p>
+ * Could be useful in the future.
  *
+ * @author Kyung Min (Jason) Lee
  */
-public class SelectableUnrestrictedTreePanel extends UnrestrictedTreePanel{
+public class SelectableUnrestrictedTreePanel extends UnrestrictedTreePanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private boolean myClicked=false;
-	private Point2D myClickedNodePoint;
-	
-	private Color myColor;
-	private static final Color CLICKED_COLOR=new Color(100,120,120);
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private static final Color CLICKED_COLOR = new Color(100, 120, 120);
+    private final Color myColor;
+    private boolean myClicked = false;
+    private Point2D myClickedNodePoint;
 
-	/**
-	 * Constructor for SelectableUnrestrictedTreePanel 
-	 * @param pane pane that is going to contain this tree panel
-	 */
-	public SelectableUnrestrictedTreePanel(BruteParsePane pane) {
-		super(pane);
-		myColor=super.INNER;
-	}
-	
-	/**
-	 * Returns the node at a particular point.
-	 * 
-	 * @param point
-	 *            the point to check for nodeness
-	 * @return the treenode at a particular point, or <CODE>null</CODE> if
-	 *         there is no treenode at that point
-	 */
-	public TreeNode nodeAtPoint(Point2D point) {
-		double x1=point.getX();
-		double y1=point.getY();
-		Iterator<Entry<UnrestrictedTreeNode, Point2D>> it = nodeToPoint.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<UnrestrictedTreeNode, Point2D> e = (Map.Entry<UnrestrictedTreeNode, Point2D>) it.next();
-			Point2D tempPoint=(Point2D) e.getValue();
-			double x2=tempPoint.getX();
-			double y2=tempPoint.getY();
-			if (Math.pow((x2-x1), 2)+Math.pow((y2-y1), 2)<=Math.pow(DefaultNodeDrawer.NODE_RADIUS,2))
-			{
-				myClicked=true;
-				myClickedNodePoint=new Point2D.Double(x2,y2);
-		//		repaint();
-				return (TreeNode)e.getKey();
-			}
-		}
-		return null;
-	}
-	
-	public Point2D getPointofSelectedNode()
-	{
-		if (myClicked)
-			return myClickedNodePoint;
-		return null;
-			
-	}
-	
-	
-	/**
-	 * Sets the answer to this tree panel.
-	 * 
-	 * @param answer
-	 *            the end result of a parse tree derivation, or <CODE>null</CODE>
-	 *            if no answer should be displayed
-	 */
-	
-	public void setAnswer(ParseNode answer) {
-		if (answer==null)
-		{
-			top=null;
-			return;
-		}
-		super.setAnswer(answer);
-		for (int i=1; i<solutionParseNodes.length; i++)
-		{
-			for (int j=0; j<solutionParseNodes[i].getSubstitutions().length; j++) 
-				next();
-		}
-	}
+    /**
+     * Constructor for SelectableUnrestrictedTreePanel
+     *
+     * @param pane pane that is going to contain this tree panel
+     */
+    public SelectableUnrestrictedTreePanel(BruteParsePane pane) {
+        super(pane);
+        myColor = super.INNER;
+    }
 
-	public void paintNode(Graphics2D g, UnrestrictedTreeNode node, Point2D p) {
-	//	System.out.println("node out : "+node.getText());
-		
-		g.setColor(node.lowest == top.length - 1 ? LEAF : INNER);
-		if (node.getText().toUpperCase().equals(node.getText()) && !node.getText().equals(""))
-			g.setColor(INNER);
+    /**
+     * Returns the node at a particular point.
+     *
+     * @param point the point to check for nodeness
+     * @return the treenode at a particular point, or <CODE>null</CODE> if
+     * there is no treenode at that point
+     */
+    public TreeNode nodeAtPoint(Point2D point) {
+        double x1 = point.getX();
+        double y1 = point.getY();
+        Iterator<Entry<UnrestrictedTreeNode, Point2D>> it = nodeToPoint.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<UnrestrictedTreeNode, Point2D> e = it.next();
+            Point2D tempPoint = e.getValue();
+            double x2 = tempPoint.getX();
+            double y2 = tempPoint.getY();
+            if (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2) <= Math.pow(DefaultNodeDrawer.NODE_RADIUS, 2)) {
+                myClicked = true;
+                myClickedNodePoint = new Point2D.Double(x2, y2);
+                //		repaint();
+                return e.getKey();
+            }
+        }
+        return null;
+    }
+
+    public Point2D getPointofSelectedNode() {
+        if (myClicked)
+            return myClickedNodePoint;
+        return null;
+
+    }
+
+
+    /**
+     * Sets the answer to this tree panel.
+     *
+     * @param answer the end result of a parse tree derivation, or <CODE>null</CODE>
+     *               if no answer should be displayed
+     */
+
+    public void setAnswer(ParseNode answer) {
+        if (answer == null) {
+            top = null;
+            return;
+        }
+        super.setAnswer(answer);
+        for (int i = 1; i < solutionParseNodes.length; i++) {
+            for (int j = 0; j < solutionParseNodes[i].getSubstitutions().length; j++)
+                next();
+        }
+    }
+
+    public void paintNode(Graphics2D g, UnrestrictedTreeNode node, Point2D p) {
+        //	System.out.println("node out : "+node.getText());
+
+        g.setColor(node.lowest == top.length - 1 ? LEAF : INNER);
+        if (node.getText().toUpperCase().equals(node.getText()) && !node.getText().equals(""))
+            g.setColor(INNER);
 		
 		
 		
@@ -146,10 +136,10 @@ public class SelectableUnrestrictedTreePanel extends UnrestrictedTreePanel{
 		if (node.getText().equals(")"))
 			myPrev=true;
 		*/
-		g.translate(p.getX(), p.getY());
-		nodeDrawer.draw(g, node);
-		g.translate(-p.getX(), -p.getY());
-	}
-	
-	//private boolean myPrev=true;
+        g.translate(p.getX(), p.getY());
+        nodeDrawer.draw(g, node);
+        g.translate(-p.getX(), -p.getY());
+    }
+
+    //private boolean myPrev=true;
 }

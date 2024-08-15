@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,9 +15,6 @@
  */
 
 
-
-
-
 package gui.action;
 
 import grammar.Grammar;
@@ -25,52 +22,52 @@ import grammar.UnrestrictedGrammar;
 import gui.environment.EnvironmentFrame;
 import gui.environment.GrammarEnvironment;
 import gui.environment.Universe;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 /**
  * This action creates a new brute force parser for the grammar.
- * 
+ *
  * @author Thomas Finley
  */
 
 public class MultipleBruteParseAction extends GrammarAction {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * The grammar environment.
+     */
+    private final GrammarEnvironment environment;
+    /**
+     * The frame for the grammar environment.
+     */
+    private final EnvironmentFrame frame;
 
-	/**
-	 * Instantiates a new <CODE>BruteParseAction</CODE>.
-	 * 
-	 * @param environment
-	 *            the grammar environment
-	 */
-	public MultipleBruteParseAction(GrammarEnvironment environment) {
-		super("Multiple Brute Force Parse", null);
-		this.environment = environment;
-		this.frame = Universe.frameForEnvironment(environment);
-	}
+    /**
+     * Instantiates a new <CODE>BruteParseAction</CODE>.
+     *
+     * @param environment the grammar environment
+     */
+    public MultipleBruteParseAction(GrammarEnvironment environment) {
+        super("Multiple Brute Force Parse", null);
+        this.environment = environment;
+        this.frame = Universe.frameForEnvironment(environment);
+    }
 
-	/**
-	 * Performs the action.
-	 */
-	public void actionPerformed(ActionEvent e) {
-		performAction((Component)e.getSource());
-	}
-	
-	public void performAction(Component source){
-		Grammar g = environment.getGrammar(UnrestrictedGrammar.class);
-		if (g == null)
-			return;
-		MultipleSimulateAction mult = new MultipleSimulateAction(g, environment);
-		mult.performAction(source);
-	}
+    /**
+     * Performs the action.
+     */
+    public void actionPerformed(ActionEvent e) {
+        performAction((Component) e.getSource());
+    }
 
-	/** The grammar environment. */
-	private GrammarEnvironment environment;
-
-	/** The frame for the grammar environment. */
-	private EnvironmentFrame frame;
+    public void performAction(Component source) {
+        Grammar g = environment.getGrammar(UnrestrictedGrammar.class);
+        if (g == null)
+            return;
+        MultipleSimulateAction mult = new MultipleSimulateAction(g, environment);
+        mult.performAction(source);
+    }
 }

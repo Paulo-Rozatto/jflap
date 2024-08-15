@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -13,9 +13,6 @@
  *  JFLAP is open source software. Please see the LICENSE for terms.
  *
  */
-
-
-
 
 
 package gui.environment;
@@ -32,62 +29,61 @@ import java.io.Serializable;
  * up as a non-editable object (inherited from the grammar), what is passed into
  * the environment is a <CODE>LSystemInputPane</CODE> which is then used to
  * retrieve the current L-system.
- * 
+ * <p>
  * Unlike, for example, the automaton environment, the <CODE>LSystem</CODE>
  * returned by the <CODE>.getObject</CODE> method will not point to the same
  * object throughout the environment's execution.
- * 
+ *
+ * @author Thomas Finley
  * @see grammar.lsystem.LSystem
  * @see gui.lsystem.LSystemInputPane
- * 
- * @author Thomas Finley
  */
 
 public class LSystemEnvironment extends Environment {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * The L-system input pane.
+     */
+    private LSystemInputPane input = null;
 
-	/**
-	 * Instantiates a new <CODE>GrammarEnvironment</CODE> with the given
-	 * <CODE>GrammarInputPane</CODE>.
-	 * 
-	 * @param input
-	 *            the <CODE>GrammarInputPane</CODE>
-	 */
-	public LSystemEnvironment(LSystemInputPane input) {
-		super(null);
-		this.input = input;
-		input.addLSystemInputListener(new LSystemInputListener() {
-			public void lSystemChanged(LSystemInputEvent event) {
-				setDirty();
-			}
-		});
-	}
+    /**
+     * Instantiates a new <CODE>GrammarEnvironment</CODE> with the given
+     * <CODE>GrammarInputPane</CODE>.
+     *
+     * @param input the <CODE>GrammarInputPane</CODE>
+     */
+    public LSystemEnvironment(LSystemInputPane input) {
+        super(null);
+        this.input = input;
+        input.addLSystemInputListener(new LSystemInputListener() {
+            public void lSystemChanged(LSystemInputEvent event) {
+                setDirty();
+            }
+        });
+    }
 
-	/**
-	 * Returns the L-system of this <CODE>LSystemEnvironment</CODE>, which is
-	 * retrieved from the <CODE>LSystemInputPane</CODE>'s <CODE>.getLSystem</CODE>
-	 * method.
-	 * 
-	 * @see gui.lsystem.LSystemInputPane#getLSystem
-	 * @return the <CODE>LSystem</CODE> for this environment
-	 */
-	public Serializable getObject() {
-		return getLSystem();
-	}
+    /**
+     * Returns the L-system of this <CODE>LSystemEnvironment</CODE>, which is
+     * retrieved from the <CODE>LSystemInputPane</CODE>'s <CODE>.getLSystem</CODE>
+     * method.
+     *
+     * @return the <CODE>LSystem</CODE> for this environment
+     * @see gui.lsystem.LSystemInputPane#getLSystem
+     */
+    public Serializable getObject() {
+        return getLSystem();
+    }
 
-	/**
-	 * Returns the L-system.
-	 * 
-	 * @see gui.grammar.GrammarInputPane#getGrammar()
-	 * @return the <CODE>ContextFreeGrammar</CODE> for this environment
-	 */
-	public LSystem getLSystem() {
-		return input.getLSystem();
-	}
-
-	/** The L-system input pane. */
-	private LSystemInputPane input = null;
+    /**
+     * Returns the L-system.
+     *
+     * @return the <CODE>ContextFreeGrammar</CODE> for this environment
+     * @see gui.grammar.GrammarInputPane#getGrammar()
+     */
+    public LSystem getLSystem() {
+        return input.getLSystem();
+    }
 }

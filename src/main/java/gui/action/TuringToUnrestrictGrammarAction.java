@@ -1,21 +1,18 @@
 /*
- *  JFLAP - Formal Languages and Automata Package
- * 
- * 
- *  Susan H. Rodger
- *  Computer Science Department
- *  Duke University
- *  August 27, 2009
+*  JFLAP - Formal Languages and Automata Package
+*
+*
+*  Susan H. Rodger
+*  Computer Science Department
+*  Duke University
+*  August 27, 2009
 
- *  Copyright (c) 2002-2009
- *  All rights reserved.
+*  Copyright (c) 2002-2009
+*  All rights reserved.
 
- *  JFLAP is open source software. Please see the LICENSE for terms.
- *
- */
-
-
-
+*  JFLAP is open source software. Please see the LICENSE for terms.
+*
+*/
 
 package gui.action;
 
@@ -30,50 +27,43 @@ import gui.viewer.SelectionDrawer;
 
 /**
  * Class for converting Turing Machine to Unrestricted Grammar
- * @author Kyung Min (Jason) Lee
  *
+ * @author Kyung Min (Jason) Lee
  */
-public class TuringToUnrestrictGrammarAction extends ConvertAutomatonToGrammarAction{
+public class TuringToUnrestrictGrammarAction extends ConvertAutomatonToGrammarAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+  /** */
+  private static final long serialVersionUID = 1L;
 
-	public TuringToUnrestrictGrammarAction(AutomatonEnvironment automatonEnvironment) {
-		super("Convert to Unrestricted Grammar", automatonEnvironment);
-		// TODO Auto-generated constructor stub
-	}
+  public TuringToUnrestrictGrammarAction(AutomatonEnvironment automatonEnvironment) {
+    super("Convert to Unrestricted Grammar", automatonEnvironment);
+    // TODO Auto-generated constructor stub
+  }
 
-	@Override
-	//TODO: Need to put error check, make sure there is only one letter popping and placing
-	// More error check?
-	protected boolean checkAutomaton() {
-		// TODO Auto-generated method stub
-		//return true for now
-		return true;
-	}
+  public static boolean isApplicable(Object object) {
+    if (object instanceof TuringMachineBuildingBlocks) {
+      return false; // buildingblocks TM
+    }
+    if (object instanceof TuringMachine) {
+      // multi-tape TM
+      return ((TuringMachine) object).tapes() == 1;
+    }
+    return false; // not a TM
+  }
 
-	@Override
-	protected ConvertController initializeController(ConvertPane pane,
-			SelectionDrawer drawer, Automaton automaton) {
-		// TODO Auto-generated method stub
-		return new TuringConvertController(pane, drawer,
-				(TuringMachine) automaton);
-	}
+  @Override
+  // TODO: Need to put error check, make sure there is only one letter popping and placing
+  // More error check?
+  protected boolean checkAutomaton() {
+    // TODO Auto-generated method stub
+    // return true for now
+    return true;
+  }
 
-	public static boolean isApplicable(Object object) {
-		if (object instanceof TuringMachineBuildingBlocks) {
-			return false;   //buildingblocks TM
-		}
-		if (object instanceof TuringMachine) {
-			if (((TuringMachine) object).tapes() == 1) {
-				return true;
-			} else {
-				return false;   //multi-tape TM
-			}
-		}
-		return false;   //not a TM
-	} 
-
+  @Override
+  protected ConvertController initializeController(
+      ConvertPane pane, SelectionDrawer drawer, Automaton automaton) {
+    // TODO Auto-generated method stub
+    return new TuringConvertController(pane, drawer, (TuringMachine) automaton);
+  }
 }

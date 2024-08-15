@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,28 +15,24 @@
  */
 
 
-
-
 package grammar.parse;
-
-import java.util.ArrayList;
-import java.util.*;
 
 import grammar.Grammar;
 import grammar.Production;
 import grammar.cfg.ContextFreeGrammar;
+import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Test Suite for CYK Tracer
- * @author lkm
  *
+ * @author lkm
  */
 public class CYKTracerTester {
 
-	public static void main(String[] args)
-	{
-		Grammar g=new ContextFreeGrammar();
-		Production[] p=new Production[5];
+    public static void main(String[] args) {
+        Grammar g = new ContextFreeGrammar();
+        Production[] p = new Production[5];
 	/*	p[0]=new Production("S","bAC");
 		p[1]=new Production("A","C");
 		p[2]=new Production("A","a");
@@ -47,33 +43,33 @@ public class CYKTracerTester {
 		p[7]=new Production("E","cE");
 		p[8]=new Production("D","dFA");
 		p[9]=new Production("F","e");*/
-		
-		p[0]=new Production("S","aSb");
-		p[1]=new Production("S","bB");
-		p[2]=new Production("B","bbB");
-		p[3]=new Production("B","");
-		p[4]=new Production("S","SS");
-		
-	
-		g.addProductions(p);
-		
-		ArrayList <Production> result=new ArrayList <Production>();
-		result.add(new Production("S","AD"));
-		result.add(new Production("A","a"));
-		result.add(new Production("D","SC"));
-		result.add(new Production("S","CS"));
-		result.add(new Production("C","b"));
-		result.add(new Production("S","SS"));
-		result.add(new Production("S","b"));
-		result.add(new Production("S","b"));
-		result.add(new Production("C","b"));
+
+        p[0] = new Production("S", "aSb");
+        p[1] = new Production("S", "bB");
+        p[2] = new Production("B", "bbB");
+        p[3] = new Production("B", "");
+        p[4] = new Production("S", "SS");
+
+
+        g.addProductions(p);
+
+        ArrayList<Production> result = new ArrayList<Production>();
+        result.add(new Production("S", "AD"));
+        result.add(new Production("A", "a"));
+        result.add(new Production("D", "SC"));
+        result.add(new Production("S", "CS"));
+        result.add(new Production("C", "b"));
+        result.add(new Production("S", "SS"));
+        result.add(new Production("S", "b"));
+        result.add(new Production("S", "b"));
+        result.add(new Production("C", "b"));
 		
 		/*result.add(new Production("D","c"));
 		result.add(new Production("C","c"));*/
-		
-		
-		CYKTracer ct=new CYKTracer(g, result);
-		ct.traceBack();
-			
-	}
+
+
+        CYKTracer ct = new CYKTracer(g, result);
+        ct.traceBack();
+
+    }
 }

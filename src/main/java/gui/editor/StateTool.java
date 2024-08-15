@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,86 +15,82 @@
  */
 
 
-
-
-
 package gui.editor;
 
 import gui.environment.AutomatonEnvironment;
 import gui.viewer.AutomatonDrawer;
 import gui.viewer.AutomatonPane;
-
+import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
-import java.awt.event.MouseEvent;
 
 /**
  * A tool that handles the creation of states.
- * 
+ *
  * @author Thomas Finley
  */
 
 public class StateTool extends Tool {
-	/**
-	 * Instantiates a new state tool.
-	 */
-	public StateTool(AutomatonPane view, AutomatonDrawer drawer) {
-		super(view, drawer);
-	}
+    /**
+     * The state that was created.
+     */
+    automata.State state = null;
 
-	/**
-	 * Gets the tool tip for this tool.
-	 * 
-	 * @return the tool tip for this tool
-	 */
-	public String getToolTip() {
-		return "State Creator";
-	}
+    /**
+     * Instantiates a new state tool.
+     */
+    public StateTool(AutomatonPane view, AutomatonDrawer drawer) {
+        super(view, drawer);
+    }
 
-	/**
-	 * Returns the tool icon.
-	 * 
-	 * @return the state tool icon
-	 */
-	protected Icon getIcon() {
-		java.net.URL url = getClass().getResource("/ICON/state.gif");
-		return new ImageIcon(url);
-	}
+    /**
+     * Gets the tool tip for this tool.
+     *
+     * @return the tool tip for this tool
+     */
+    public String getToolTip() {
+        return "State Creator";
+    }
 
-	/**
-	 * When the user clicks, one creates a state.
-	 * 
-	 * @param event
-	 *            the mouse event
-	 */
-	public void mousePressed(MouseEvent event) {
-		if (getDrawer().getAutomaton().getEnvironmentFrame() !=null)
-    		((AutomatonEnvironment)getDrawer().getAutomaton().getEnvironmentFrame().getEnvironment()).saveStatus();
-		state = getAutomaton().createState(event.getPoint());
-		getView().repaint();
-	}
+    /**
+     * Returns the tool icon.
+     *
+     * @return the state tool icon
+     */
+    protected Icon getIcon() {
+        java.net.URL url = getClass().getResource("/ICON/state.gif");
+        return new ImageIcon(url);
+    }
 
-	/**
-	 * When the user drags, one moves the created state.
-	 * 
-	 * @param event
-	 *            the mouse event
-	 */
-	public void mouseDragged(MouseEvent event) {
-		state.setPoint(event.getPoint());
-		getView().repaint();
-	}
+    /**
+     * When the user clicks, one creates a state.
+     *
+     * @param event the mouse event
+     */
+    public void mousePressed(MouseEvent event) {
+        if (getDrawer().getAutomaton().getEnvironmentFrame() != null)
+            ((AutomatonEnvironment) getDrawer().getAutomaton().getEnvironmentFrame().getEnvironment()).saveStatus();
+        state = getAutomaton().createState(event.getPoint());
+        getView().repaint();
+    }
 
-	/**
-	 * Returns the keystroke to switch to this tool, S.
-	 * 
-	 * @return the keystroke for this tool
-	 */
-	public KeyStroke getKey() {
-		return KeyStroke.getKeyStroke('s');
-	}
+    /**
+     * When the user drags, one moves the created state.
+     *
+     * @param event the mouse event
+     */
+    public void mouseDragged(MouseEvent event) {
+        state.setPoint(event.getPoint());
+        getView().repaint();
+    }
 
-	/** The state that was created. */
-	automata.State state = null;
+    /**
+     * Returns the keystroke to switch to this tool, S.
+     *
+     * @return the keystroke for this tool
+     */
+    public KeyStroke getKey() {
+        return KeyStroke.getKeyStroke('s');
+    }
 }

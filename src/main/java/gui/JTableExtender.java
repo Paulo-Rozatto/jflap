@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,38 +15,33 @@
  */
 
 
-
-
 package gui;
 
 import gui.action.BatchMultipleSimulateAction;
 import gui.action.MultipleSimulateAction;
-import gui.sim.multiple.InputTableModel;
-
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-public class JTableExtender extends JTable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class JTableExtender extends JTable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private final MultipleSimulateAction myMultSimAct;
 
-	public JTableExtender(TableModel model, MultipleSimulateAction mult){
-		super(model);
-		myMultSimAct = mult;
-	}
-	
-	public JTableExtender(TableModel model, BatchMultipleSimulateAction mult){
-		super(model);
-		myMultSimAct = mult;
-	}
-	
-	
-	public void changeSelection (int row, int column, boolean toggle, boolean extend) {
-		 super.changeSelection (row, column, toggle, extend);
-		 myMultSimAct.viewAutomaton(this);
-		 }
-	
-	private MultipleSimulateAction myMultSimAct;
+    public JTableExtender(TableModel model, MultipleSimulateAction mult) {
+        super(model);
+        myMultSimAct = mult;
+    }
+
+
+    public JTableExtender(TableModel model, BatchMultipleSimulateAction mult) {
+        super(model);
+        myMultSimAct = mult;
+    }
+
+    public void changeSelection(int row, int column, boolean toggle, boolean extend) {
+        super.changeSelection(row, column, toggle, extend);
+        myMultSimAct.viewAutomaton(this);
+    }
 }

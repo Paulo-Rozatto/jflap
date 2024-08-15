@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,55 +15,52 @@
  */
 
 
-
-
 package gui.action;
 
 import gui.environment.Environment;
-
-import javax.swing.JComponent;
-import javax.swing.JMenu;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
 
 /**
  * The <CODE>SaveGraphPNGAction</CODE> is an action to save the graph in window
  * to a PNG image file always using a dialog box.
- * 
+ *
  * @author Jonathan Su
  */
 
-public class SaveGraphPNGAction extends RestrictedAction{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/** The environment that this save action gets it's object from. */
-	protected Environment environment;
-	protected JMenu myMenu;
-	
-	/**
-	 * Instantiates a new <CODE>SaveGraphPNGAction</CODE>.
-	 * 
-	 * @param environment
-	 *            the environment that holds the action
-	 */
-	public SaveGraphPNGAction(Environment environment, JMenu menu) {
-		super("Save Graph as PNG", null);
-		this.environment = environment;
-		this.myMenu = menu;
-	}
+public class SaveGraphPNGAction extends RestrictedAction {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * The environment that this save action gets it's object from.
+     */
+    protected Environment environment;
+    protected JMenu myMenu;
 
-	/**
-	 * Displays JFileChooser for location to save the graph canvas as png image.
-	 * 
-	 * @param arg0
-	 *            the action event
-	 */
-	public void actionPerformed(ActionEvent arg0) {
+    /**
+     * Instantiates a new <CODE>SaveGraphPNGAction</CODE>.
+     *
+     * @param environment the environment that holds the action
+     */
+    public SaveGraphPNGAction(Environment environment, JMenu menu) {
+        super("Save Graph as PNG", null);
+        this.environment = environment;
+        this.myMenu = menu;
+    }
 
-           Component apane = environment.tabbed.getSelectedComponent();
-           JComponent c=(JComponent)environment.getActive();
-           SaveGraphUtility.saveGraph(apane, c,"PNG files", "png"); 
-    }  
+    /**
+     * Displays JFileChooser for location to save the graph canvas as png image.
+     *
+     * @param arg0 the action event
+     */
+    public void actionPerformed(ActionEvent arg0) {
+
+        Component apane = environment.tabbed.getSelectedComponent();
+        JComponent c = (JComponent) environment.getActive();
+        SaveGraphUtility.saveGraph(apane, c, "PNG files", "png");
+    }
 }

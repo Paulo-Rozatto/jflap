@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,59 +15,57 @@
  */
 
 
-
-
 package automata.turing;
 
+import automata.Automaton;
 import automata.State;
 import java.awt.Point;
-import automata.Automaton;
-
 
 /**
-  This class represents the TuringMachine-specific aspects of states, such as the ability to hold inner machines.
-
-
-  @author Henry Qin
-  */
-public class TMState extends State{
+ * This class represents the TuringMachine-specific aspects of states, such as the ability to hold inner machines.
+ *
+ * @author Henry Qin
+ */
+public class TMState extends State {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private TuringMachineBuildingBlocks myInnerTuringMachine;
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public String myInternalName = null;
+    private TuringMachineBuildingBlocks myInnerTuringMachine;
 
-    public TMState(int id, Point point, Automaton tm){ //do we really need a pointer to the parent?
+    public TMState(int id, Point point, Automaton tm) { //do we really need a pointer to the parent?
         super(id, point, tm);
 
-        assert(tm instanceof TuringMachine);
+        assert (tm instanceof TuringMachine);
 
         myInnerTuringMachine = new TuringMachineBuildingBlocks();
         myInnerTuringMachine.setParent(this);
     }
 
-    public TMState(TMState copyMe){ //do we really need a pointer to the parent?
-        this(copyMe.getID(), (Point)copyMe.getPoint().clone(), copyMe.getAutomaton());
+    public TMState(TMState copyMe) { //do we really need a pointer to the parent?
+        this(copyMe.getID(), (Point) copyMe.getPoint().clone(), copyMe.getAutomaton());
 
         myInnerTuringMachine = (TuringMachineBuildingBlocks) copyMe.getInnerTM().clone(); //this should result in recursion until we reach a TMState whose inner TM does not contain states.
     }
 
-    public void setInnerTM(TuringMachineBuildingBlocks tm){
+    public TuringMachineBuildingBlocks getInnerTM() {
+        return myInnerTuringMachine;
+    }
+
+    public void setInnerTM(TuringMachineBuildingBlocks tm) {
         myInnerTuringMachine = tm;
         myInnerTuringMachine.setParent(this);
         assert (myInnerTuringMachine.getParent() == this);
     }
-    public TuringMachineBuildingBlocks getInnerTM(){
-        return myInnerTuringMachine;
-    }
-    public String getInternalName(){ //just for trying to preserve old way of saving.
+
+    public String getInternalName() { //just for trying to preserve old way of saving.
         //ASSUME that ID's are Independent
-        return myInternalName == null? myInternalName = "Machine"+ getID() : myInternalName; //create an internal name if one has not been assigned explicitly
-    }
-    public void setInternalName(String s){ //just for trying to preserve old way of saving.
-        myInternalName = s;
+        return myInternalName == null ? myInternalName = "Machine" + getID() : myInternalName; //create an internal name if one has not been assigned explicitly
     }
 
-    public String myInternalName = null;
+    public void setInternalName(String s) { //just for trying to preserve old way of saving.
+        myInternalName = s;
+    }
 
 }

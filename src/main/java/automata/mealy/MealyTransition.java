@@ -1,7 +1,7 @@
 /*
  *  JFLAP - Formal Languages and Automata Package
- * 
- * 
+ *
+ *
  *  Susan H. Rodger
  *  Computer Science Department
  *  Duke University
@@ -15,14 +15,11 @@
  */
 
 
-
-
-
 package automata.mealy;
 
-import gui.environment.Universe;
 import automata.State;
 import automata.Transition;
+import gui.environment.Universe;
 
 /**
  * A <code>MealyTransition</code> is a <code>Transition</code>
@@ -30,18 +27,16 @@ import automata.Transition;
  * label determines if the machine should move on this transition
  * and the output is the output produced  if the machine moves
  * on this transition.
- * 
- * @see MealyMachine
- * @author Jinghui Lim
  *
+ * @author Jinghui Lim
+ * @see MealyMachine
  */
-public class MealyTransition extends Transition 
-{
+public class MealyTransition extends Transition {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * Transition label
      */
     protected String myLabel;
@@ -49,148 +44,135 @@ public class MealyTransition extends Transition
      * Transition output
      */
     protected String myOutput;
-    
+
     /**
      * Instantiates a new <code>MealyTransition</code> object.
-     * 
-     * @param from the state this transition comes from
-     * @param to the state this transition goes to
-     * @param label the label for this transition that the input string
-     * in the machine should match before moving through this transition
+     *
+     * @param from   the state this transition comes from
+     * @param to     the state this transition goes to
+     * @param label  the label for this transition that the input string
+     *               in the machine should match before moving through this transition
      * @param output the output this transition produces
      */
-    public MealyTransition(State from, State to, String label, String output) 
-    {
+    public MealyTransition(State from, State to, String label, String output) {
         super(from, to);
         setLabel(label);
         setOutput(output);
     }
-    
+
     /**
      * Produces a copy of this transition with new from and to states.
-     * 
+     *
      * @param from the new from state
-     * @param to the new to state
+     * @param to   the new to state
      * @return a copy of this transition with new states
      */
-    public Transition copy(State from, State to) 
-    {
+    public Transition copy(State from, State to) {
         return new MealyTransition(from, to, myLabel, myOutput);
     }
-    
+
+    /**
+     * Returns the label for this transition.
+     *
+     * @return the label for this transition
+     */
+    public String getLabel() {
+        return myLabel;
+    }
+
     /**
      * Sets the label for this transition.
-     * 
+     *
      * @param label the new label for this transition
      */
-    protected void setLabel(String label)
-    {
+    protected void setLabel(String label) {
         /*
          * The null check should not be needed as label should not be null
          * so this is being too careful.
          */
-        if(label == null)
+        if (label == null)
             myLabel = "";
         else
             myLabel = label;
     }
-    
+
+    /**
+     * Returns the output for this transition.
+     *
+     * @return the output for this transition
+     */
+    public String getOutput() {
+        return myOutput;
+    }
+
     /**
      * Sets the output for this transition.
-     * 
+     *
      * @param output the new output for this transition
      */
-    protected void setOutput(String output)
-    {
+    protected void setOutput(String output) {
         /*
          * Too careful again.
          */
-        if(output == null)
+        if (output == null)
             myOutput = "";
         else
             myOutput = output;
     }
-    
-    /**
-     * Returns the label for this transition.
-     * 
-     * @return the label for this transition
-     */
-    public String getLabel()
-    {
-        return myLabel;
-    }
-    
-    /**
-     * Returns the output for this transition.
-     * 
-     * @return the output for this transition
-     */
-    public String getOutput()
-    {
-        return myOutput;
-    }
-    
+
     /**
      * Returns a string description for this transition. This
      * consists of the label and output of the transition.
-     * 
+     *
      * @return the description for this transition
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         String label = getLabel();
         String output = getOutput();
-        if(label == null || label.length() == 0)
+        if (label == null || label.length() == 0)
             label = Universe.curProfile.getEmptyString();
-        if(output == null || output.length() == 0)
-            output = Universe.curProfile.getEmptyString();;
+        if (output == null || output.length() == 0)
+            output = Universe.curProfile.getEmptyString();
         return label + " ; " + output;
     }
-    
+
     /**
      * Returns a string representation of this object. This is the same
      * as the string representation for a regular transition object with
      * the label and output tacked on.
-     * 
-     * @see automata.Transition#toString()
+     *
      * @return a string representation of this object
+     * @see automata.Transition#toString()
      */
-    public String toString()
-    {
+    public String toString() {
         return super.toString() + ": \"" + getLabel() + "/" + getOutput() + "\"";
     }
-    
+
     /**
      * Returns if this transition is equal to another object. They are equal
      * if they satisfy automata.Transition.equals(Object) and have the same
      * label and output.
-     * 
-     * @see automata.Transition#equals(Object)
+     *
      * @param object the object to compare against
      * @return <code>true</code> if the two are equal,
      * <code>false</code> otherwise
+     * @see automata.Transition#equals(Object)
      */
-    public boolean equals(Object object)
-    {
-        try
-        {
+    public boolean equals(Object object) {
+        try {
             MealyTransition t = (MealyTransition) object;
             return super.equals(t) && getLabel().equals(t.getLabel()) && getOutput().equals(t.getOutput());
-        }
-        catch(ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             return false;
         }
     }
 
     /**
      * Returns the hash code for this transition object.
-     * 
+     *
      * @return the hash code for this transition
      */
-    public int hashCode()
-    {
+    public int hashCode() {
         return super.hashCode() ^ getLabel().hashCode() ^ getOutput().hashCode();
     }
 }
